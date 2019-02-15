@@ -4,8 +4,8 @@
   "description": "Social network for developers",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "nodemon server.js",
+    "npm server": "node server.js"
   },
   "author": "Brad Traversy",
   "license": "MIT",
