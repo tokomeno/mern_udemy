@@ -4,9 +4,7 @@ import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
 const middleware = [thunk]
-const initState = {
-	hey: 'cool'
-}
+const initState = { }
 
 // const reducer = (state = initState, action) => {
 // 	return state

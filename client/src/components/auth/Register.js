@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import classnames from 'classnames'
 
-// import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {registerUser} from '../../actions/authActions'
+
+import PropTypes from 'prop-types'
 // import axios from 'axios'
 
 class Register extends Component {
@@ -30,6 +33,8 @@ class Register extends Component {
 			password2: this.state.password2,
 		}
 		console.log(newUser)
+    this.props.registerUser(newUser)
+    return;
 		axios.post('/api/users/register', newUser)
 			.then(res => console.log(res.data))
 			.catch(err => {
@@ -44,12 +49,13 @@ class Register extends Component {
   	const { errors } = this.state
     return (
   <div className="register">
+  {this.props.auth.user ? this.props.auth.user.name : null}
     <div className="container">
       <div className="row">
         <div className="col-md-8 m-auto">
           <h1 className="display-4 text-center">Sign Up</h1>
           <p className="lead text-center">Create your DevConnector account</p>
-          <form novalidate onSubmit={this.onSubmit}>
+          <form  onSubmit={this.onSubmit}>
             <div className="form-group">
               <input type="text"
                className={classnames('form-control form-control-lg', {
@@ -106,9 +112,21 @@ class Register extends Component {
     )
    }
 }
-// Posts.propTypes = {
-// 	todos: PropTypes.array.isRequired
-// }
+Register.propTypes = {
+	registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
 
-export default Register
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+      registerUser: (data) => dispatch(registerUser(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
 
