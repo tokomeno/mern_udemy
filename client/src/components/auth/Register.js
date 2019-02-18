@@ -6,6 +6,8 @@ import {connect} from 'react-redux'
 import {registerUser} from '../../actions/authActions'
 
 import PropTypes from 'prop-types'
+
+import {withRouter} from 'react-router-dom'
 // import axios from 'axios'
 
 class Register extends Component {
@@ -33,20 +35,18 @@ class Register extends Component {
 			password2: this.state.password2,
 		}
 		console.log(newUser)
-    this.props.registerUser(newUser)
-    return;
-		axios.post('/api/users/register', newUser)
-			.then(res => console.log(res.data))
-			.catch(err => {
-				console.log(err.response.data)
-				this.setState({
-					errors: err.response.data
-				})
-			})
+    this.props.registerUser(newUser, this.props.history)
 	}
 
+  // componentWillReceiveProps(nextProps){
+  //   if(nextProps.errors){
+  //     this.setState({errors: nextProps.errors})
+  //   }
+  // }
+
   render() {
-  	const { errors } = this.state
+  	// const { errors } = this.state
+    const {errors} = this.props
     return (
   <div className="register">
   {this.props.auth.user ? this.props.auth.user.name : null}
@@ -114,19 +114,21 @@ class Register extends Component {
 }
 Register.propTypes = {
 	registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
   }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-      registerUser: (data) => dispatch(registerUser(data))
+      registerUser: (data, history) => dispatch(registerUser(data, history))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register))
 
