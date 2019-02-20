@@ -8,6 +8,8 @@ const initState = {
 }
 
 export default function(state = initState, action){
+		console.log('auth Reducer')
+
 	switch(action.type){
 		case TEST_DISPATCH:
 			return {
