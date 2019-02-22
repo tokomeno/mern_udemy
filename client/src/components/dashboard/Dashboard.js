@@ -3,15 +3,20 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 // import axios from 'axios'
 import {connect} from 'react-redux'
-import {getCurrentProfile} from '../../actions/profileActions'
+import {getCurrentProfile, deleteAcount} from '../../actions/profileActions'
 
 import Spinner from '../common/Spinner'
-
+import ProfileActions from './ProfileActions'
 class Dashboard extends Component {
 
 	componentWillMount(){
 		console.log(this.props)
 		this.props.getCurrentProfile()
+	}
+
+	onDeleteClick = () => {
+		// alert(1)
+		this.props.deleteAcount()
 	}
 
   render() {
@@ -25,7 +30,18 @@ class Dashboard extends Component {
   	}else{
   		// dashboardContent =
   		if(Object.keys(profile).length > 0){
-  			dashboardContent = <h1>dddddddddd</h1>
+  			dashboardContent = (
+  				<div>
+  					<h1>
+	  				Welcome <Link to={profile.handle}> {user.name} </Link>
+	  				</h1>
+	  				<ProfileActions></ProfileActions>
+
+	  				<div className="mt-3" >
+						<button  onClick={this.onDeleteClick} className="btn btn-danger">Deelte</button>
+	  				</div>
+  				</div>
+  			)
   		}else{
   			dashboardContent = (
 				<div>
@@ -63,4 +79,4 @@ const mapStateToProps = state => ({
 	auth:state.auth
 })
 
-export default connect(mapStateToProps, {getCurrentProfile})(Dashboard)
+export default connect(mapStateToProps, {getCurrentProfile, deleteAcount})(Dashboard)
