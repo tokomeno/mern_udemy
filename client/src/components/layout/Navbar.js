@@ -21,6 +21,11 @@ class Navbar extends Component {
               <img className="rounded-circle" src={user.avatar} style={{width:'25px', marginRight:'5px'}} />
               Logout
             </a>
+              <li className="nav-item">
+                <Link className="nav-link" to="dashbooard">
+                 dashbooard
+                </Link>
+              </li>
           </li>
         </ul>
     )
