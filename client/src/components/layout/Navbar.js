@@ -26,6 +26,12 @@ class Navbar extends Component {
                  dashbooard
                 </Link>
               </li>
+
+               <li className="nav-item">
+                <Link className="nav-link" to="feed">
+                 feed
+                </Link>
+              </li>
           </li>
         </ul>
     )
